@@ -49,7 +49,7 @@ $("#weight-sort").on("click", function() {
 // When user clicks the name sort button, display the table sorted by name
 $("#name-sort").on("click", function() {
   // Set new column as currently-sorted (active)
-  setActive("#animal-name");
+  // setActive("#animal-name");
 
   // Do an api call to the back end for json with all animals sorted by name
   $.getJSON("/name", function(data) {

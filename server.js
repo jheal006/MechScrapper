@@ -45,13 +45,19 @@ db.once("open", function() {
 // Routes
 // =============================================================
 
+require("./routes/html-routes.js")(app);
 require("./routes/news.js")(app);
 
-// First, tell the console what server.js is doing
-// console.log("\n***********************************\n" +             "Grabbing every thread name and link\n" + "from reddit's webdev board:" + "\n***********************************\n");
+
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 // Set up a static folder (public) for our web app
 app.use(express.static("public"));
+
 
 // Set the app to listen on port 3000
 app.listen(3000, function() {
