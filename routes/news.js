@@ -41,42 +41,41 @@ module.exports = function(app) {
       });
     });
 
-  app.post("/save", function(req, res) {
-    request("https://mwomercs.com/news", function(error, response, html) {
-      // Load the HTML into cheerio and save it to a variable
-      // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
-      var $ = cheerio.load(html);
-      // An empty array to save the data that we'll scrape
-      var results = {};
-      // With cheerio, find each p-tag with the "title" class
-      // (i: iterator. element: the current element)
-      $("p").each(function(i, element) {
+  app.get("/save", function(req, res) {
+      request("https://mwomercs.com/news", function(error, response, html) {
+        // Load the HTML into cheerio and save it to a variable
+        // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
+        var $ = cheerio.load(html);
+        // An empty array to save the data that we'll scrape
+        var results = {};
+        // With cheerio, find each p-tag with the "title" class
+        // (i: iterator. element: the current element)
+        $("p").each(function(i, element) {
 
-        // Save the text of the element in a "title" variable
-        results.title = $(element).parent().find('h2').text();
-        // Save link to article
-        results.link = "https://mwomercs.com" + $(element).parent().find('h2').children().attr("href");
-        //Save article summary
-        var summary = $(element).text();
-        summary = summary.replace(/\r?\n|\r/g, " ");
-        results.summary = summary;
-        // Using the Article model, create a new entry
-        // This effectively passes the result object to the entry (and the title and link)
-        var entry = new Article(results);
-        // Save these results in an object that we'll push into the results array we defined earlier
-        entry.save(function(err, doc){
-          //Log any errors
-          if (err) {
-            console.log(err);
-          }
-          // Or log the doc
-          else {
-            console.log(doc);
-          }
+          // Save the text of the element in a "title" variable
+          results.title = $(element).parent().find('h2').text();
+          // Save link to article
+          results.link = "https://mwomercs.com" + $(element).parent().find('h2').children().attr("href");
+          //Save article summary
+          var summary = $(element).text();
+          summary = summary.replace(/\r?\n|\r/g, " ");
+          results.summary = summary;
+          // Using the Article model, create a new entry
+          // This effectively passes the result object to the entry (and the title and link)
+          var entry = new Article(results);
+          // Save these results in an object that we'll push into the results array we defined earlier
+          entry.save(function(err, doc){
+            //Log any errors
+            if (err) {
+              console.log(err);
+            }
+            // Or log the doc
+            else {
+              console.log(doc);
+            }
+          });
         });
-      });
-    res.render("index");
-  });
+    });
   // Tell the browser that we finisehd scraping the test
   res.send("SCRAPE COMPLETE")
   });
