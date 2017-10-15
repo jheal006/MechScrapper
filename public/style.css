@@ -1,5 +1,5 @@
 body {
-  background-color: #6a5;
+  background: #E0E0E0 !important;
 }
 
 table,
@@ -26,6 +26,40 @@ button {
   margin-bottom: 20px;
 }
 
+p {
+  background-color: #E1E1E1;
+  padding: 5px 15px;
+}
+
+.container {
+  padding-top: 10px;
+  background: darkgrey;
+}
+
+.text-center {
+  color: darkred;
+}
+
+.panel-title {
+  background-color: darkred;
+  color: black;
+  padding: 5px;
+}
+
+.title {
+  padding-top 10px;
+  background-image: url("/images/battletech.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
 .active {
   color: red;
+}
+
+.header {
+  padding: 5px 5px 0 5px;
+  background-color: #F2DEDE;
+  border-bottom: 1px solid lightgrey;
 }

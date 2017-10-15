@@ -1,12 +1,11 @@
-// Dependencies
+// Node Dependencies
 var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-
 //Require Models
-var Article = require("./models/Article.js");
+// var Article = require("./models/Article.js");
 
 // Scripting Tools
 var cheerio = require("cheerio");
@@ -42,22 +41,19 @@ db.once("open", function() {
 });
 
 
-// Routes
-// =============================================================
-
-require("./routes/html-routes.js")(app);
-require("./routes/news.js")(app);
-
-
-// Set Handlebars.
+// Set Handlebars
 var exphbs = require("express-handlebars");
-
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Set up a static folder (public) for our web app
 app.use(express.static("public"));
 
+// Routes
+// =============================================================
+// require("./routes/html-routes.js")(app);
+var router = require("./routes/controller.js");
+app.use("/", router);
 
 // Set the app to listen on port 3000
 app.listen(3000, function() {
